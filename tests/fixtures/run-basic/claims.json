@@ -1,0 +1,19 @@
+{"claims": [
+ {"id": "c1", "text": "Canberra is the capital of Australia.", "kind": "fact",
+  "support": [{"source": "codex", "quote": "Canberra is the capital of Australia."},
+              {"source": "grok", "quote": "Canberra is the capital of Australia"},
+              {"source": "agy", "quote": "Australia's capital is Canberra."},
+              {"source": "kimi", "quote": "Canberra is the capital city of Australia."}]},
+ {"id": "c2", "text": "Parliament first sat in Canberra in 1927.", "kind": "number",
+  "support": [{"source": "codex", "quote": "The Parliament first sat in Canberra in 1927"}],
+  "contradict": [{"source": "grok", "quote": "Parliament moved to Canberra in 1929", "says": "1929"}]},
+ {"id": "c3", "text": "Autumn is the best time to visit.", "kind": "advice",
+  "support": [{"source": "codex", "quote": "visit in autumn, when the weather is mild"},
+              {"source": "copilot", "quote": "Visit in autumn, when the weather is mild"}]},
+ {"id": "c4", "text": "The city was designed by Walter Burley Griffin and Marion Mahony Griffin.", "kind": "fact",
+  "support": [{"source": "agy", "quote": "designed by Walter Burley Griffin ... Marion Mahony Griffin"}]},
+ {"id": "c5", "text": "Canberra has a population of two million.", "kind": "number",
+  "support": [{"source": "kimi", "quote": "Canberra has about two million people"}]}
+],
+ "skipped": [{"source": "copilot", "quote": "The capital of Australia is Canberra, a planned city."}]
+}

@@ -1,0 +1,9 @@
+{"claims": [
+ {"id": "c1", "text": "The Great Wall is not visible to the naked eye from low Earth orbit.", "kind": "fact",
+  "support": [{"source": "deepseek", "quote": "not visible to the naked eye from low Earth orbit"},
+              {"source": "qwen", "quote": "the Great Wall of China is not visible to the naked eye"}]},
+ {"id": "c2", "text": "The capital of France is Paris.", "kind": "fact",
+  "support": [{"source": "mistral", "quote": "capital of France is Lyon ... Paris"}]},
+ {"id": "c3", "text": "The largest city is Paris.", "kind": "fact",
+  "support": [{"source": "mistral", "quote": "The largest city ... Paris"}]}
+]}

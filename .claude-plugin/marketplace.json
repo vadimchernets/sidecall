@@ -1,0 +1,15 @@
+{
+  "name": "sidecall",
+  "owner": {"name": "Vadym Chernets"},
+  "metadata": {"description": "Sidecall: ask the other AI CLIs on your machine and get one honest report."},
+  "plugins": [
+    {
+      "name": "sidecall",
+      "source": "./",
+      "description": "Ask other AI command-line agents the same question in parallel and get a claim-by-claim report, a second opinion, or a critic from a different model family.",
+      "author": {"name": "Vadym Chernets"},
+      "license": "Apache-2.0",
+      "category": "productivity"
+    }
+  ]
+}

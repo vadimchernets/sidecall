@@ -1,0 +1,40 @@
+{
+  "_about": "Which model family each source belongs to, and the pairwise correlations used to count independent voices. The correlations are ASSUMED, not measured: same family 0.9, same cluster 0.6, otherwise 0.35. To measure your own, use the teaching calculator in https://github.com/vadimchernets/after-chat.",
+  "assumed": true,
+  "version": "0.1.0",
+  "rho": {
+    "same_family": 0.9,
+    "same_cluster": 0.6,
+    "other": 0.35
+  },
+  "families": {
+    "openai":    {"cluster": "openai",    "label": "OpenAI"},
+    "google":    {"cluster": "google",    "label": "Google"},
+    "xai":       {"cluster": "xai",       "label": "xAI"},
+    "anthropic": {"cluster": "anthropic", "label": "Anthropic"},
+    "mistral":   {"cluster": "mistral",   "label": "Mistral"},
+    "meta":      {"cluster": "meta",      "label": "Meta"},
+    "deepseek":  {"cluster": "cn",        "label": "DeepSeek"},
+    "alibaba":   {"cluster": "cn",        "label": "Alibaba (Qwen)"},
+    "moonshot":  {"cluster": "cn",        "label": "Moonshot (Kimi)"},
+    "zhipu":     {"cluster": "cn",        "label": "Zhipu (GLM)"},
+    "baidu":     {"cluster": "cn",        "label": "Baidu (ERNIE)"}
+  },
+  "sources": {
+    "chatgpt":  "openai",
+    "copilot":  "openai",
+    "codex":    "openai",
+    "gemini":   "google",
+    "agy":      "google",
+    "grok":     "xai",
+    "claude":   "anthropic",
+    "mistral":  "mistral",
+    "meta":     "meta",
+    "deepseek": "deepseek",
+    "qwen":     "alibaba",
+    "kimi":     "moonshot",
+    "glm":      "zhipu",
+    "zai":      "zhipu",
+    "ernie":    "baidu"
+  }
+}

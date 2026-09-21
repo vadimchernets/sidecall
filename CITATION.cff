@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "Sidecall: a Claude Code plugin that asks other AI command-line agents the same question and reports agreement claim by claim"
+version: 0.1.0
+date-released: 2026-09-21
+license: Apache-2.0
+repository-code: "https://github.com/vadimchernets/sidecall"
+keywords:
+  - claude-code-plugin
+  - multi-model
+  - provenance
+  - second-opinion
+authors:
+  - family-names: Chernets
+    given-names: Vadym
+    orcid: "https://orcid.org/0009-0007-4845-3163"
+references:
+  - type: article
+    title: "After Chat: The Three Transitions Between Non-Programmers and Agentic AI"
+    authors:
+      - family-names: Chernets
+        given-names: Vadym
+    year: 2026

@@ -1,0 +1,411 @@
+{
+  "_about": "How Sidecall calls each official CLI. Placeholders: {model_args} = the model flag and id (always explicit, never the CLI's hidden default, except in the inherit mode the user picks), {effort_args} = the reasoning-effort flag, {prompt} = the prompt as one argument, {prompt_file} = path of the prompt file, {final_file} = where the CLI writes its final answer. Flags were checked against each tool's --help on 21 Sep 2026; setup warns when an expected flag is missing. Model ids and efforts are data: edit them here or override per tool in your tools.json. Quota and sign-in patterns are matched only when a call fails (non-zero exit), against its error output.",
+  "version": "0.1.0",
+  "default_budget": "standard",
+  "budgets": {
+    "standard": "economical everyday models at medium effort (default)",
+    "stronger": "stronger models or higher effort: a stronger model costs more and uses your quota faster",
+    "strongest": "the top models at high effort: uses your quota faster than any other mode",
+    "inherit": "no model flag: each tool uses its own settings (a tool's default is often its most expensive model)"
+  },
+  "preference": [
+    "codex",
+    "agy",
+    "grok",
+    "kimi",
+    "claude",
+    "gemini"
+  ],
+  "max_panel": 4,
+  "tools": {
+    "codex": {
+      "label": "Codex CLI",
+      "family": "openai",
+      "binary": "codex",
+      "version_cmd": [
+        "codex",
+        "--version"
+      ],
+      "argv": [
+        "codex",
+        "exec",
+        "--skip-git-repo-check",
+        "-s",
+        "read-only",
+        "{model_args}",
+        "{effort_args}",
+        "-o",
+        "{final_file}",
+        "-"
+      ],
+      "prompt_via": "stdin",
+      "model_flag": "-m",
+      "model_required": true,
+      "models": {
+        "standard": {
+          "model": "gpt-5.6-luna",
+          "effort": "medium"
+        },
+        "stronger": {
+          "model": "gpt-5.6-terra",
+          "effort": "medium"
+        },
+        "strongest": {
+          "model": "gpt-5.6-sol",
+          "effort": "high"
+        }
+      },
+      "expected_flags": [
+        "--skip-git-repo-check",
+        "--sandbox",
+        "--output-last-message",
+        "--model",
+        "--config"
+      ],
+      "help_cmd": [
+        "codex",
+        "exec",
+        "--help"
+      ],
+      "readonly": "OS-enforced read-only sandbox (-s read-only)",
+      "default_on": true,
+      "scarce_quota": false,
+      "experimental": false,
+      "login_hint": "codex login",
+      "install_hint": "npm install -g @openai/codex",
+      "quota_patterns": [
+        "usage limit",
+        "rate limit exceeded",
+        "quota exceeded",
+        "exceeded your",
+        "too many requests",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "not logged in",
+        "please log in",
+        "login required",
+        "unauthorized",
+        "\\b401\\b",
+        "authentication (?:failed|required)"
+      ],
+      "effort_args": [
+        "-c",
+        "model_reasoning_effort=\"{effort}\""
+      ],
+      "report_patterns": {
+        "model": "^model:\\s*(\\S+)",
+        "effort": "^reasoning effort:\\s*(\\S+)"
+      }
+    },
+    "agy": {
+      "label": "Antigravity CLI",
+      "family": "google",
+      "binary": "agy",
+      "version_cmd": [
+        "agy",
+        "--version"
+      ],
+      "argv": [
+        "agy",
+        "{model_args}",
+        "-p",
+        "{prompt}"
+      ],
+      "prompt_via": "arg",
+      "max_arg_bytes": 120000,
+      "model_flag": "--model",
+      "model_required": false,
+      "models": {
+        "standard": {
+          "model": "gemini-3.8-flash-medium"
+        },
+        "stronger": {
+          "model": "gemini-3.1-pro-low"
+        },
+        "strongest": {
+          "model": "gemini-3.1-pro-high"
+        }
+      },
+      "expected_flags": [
+        "--print",
+        "--model"
+      ],
+      "help_cmd": [
+        "agy",
+        "--help"
+      ],
+      "readonly": "agent-enforced: in print mode it cannot ask for tool permission, so tools that need it are refused",
+      "default_on": true,
+      "scarce_quota": true,
+      "experimental": false,
+      "login_hint": "agy (sign in once interactively)",
+      "install_hint": "see Google's Antigravity CLI install page",
+      "note": "Small daily allowance: never probed, its first real call is its probe. Give it everything in the prompt; it cannot read files in print mode.",
+      "quota_patterns": [
+        "quota exceeded",
+        "resource exhausted",
+        "rate limit exceeded",
+        "daily limit",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "not logged in",
+        "please sign in",
+        "sign in required",
+        "unauthenticated",
+        "\\b401\\b"
+      ],
+      "effort_note": "the model id carries the effort (-low, -medium, -high); agy refuses a separate --effort that disagrees with it (21 Sep 2026)"
+    },
+    "grok": {
+      "label": "Grok CLI",
+      "family": "xai",
+      "binary": "grok",
+      "version_cmd": [
+        "grok",
+        "--version"
+      ],
+      "argv": [
+        "grok",
+        "{model_args}",
+        "{effort_args}",
+        "--disallowed-tools",
+        "run_terminal_command",
+        "--prompt-file",
+        "{prompt_file}"
+      ],
+      "prompt_via": "file",
+      "model_flag": "-m",
+      "model_required": false,
+      "models": {
+        "standard": {
+          "model": "grok-4.7",
+          "effort": "medium"
+        },
+        "stronger": {
+          "model": "grok-4.7",
+          "effort": "high"
+        },
+        "strongest": {
+          "model": "grok-4.7",
+          "effort": "xhigh"
+        }
+      },
+      "expected_flags": [
+        "--prompt-file",
+        "--disallowed-tools",
+        "--model",
+        "--reasoning-effort"
+      ],
+      "help_cmd": [
+        "grok",
+        "--help"
+      ],
+      "readonly": "agent-enforced: the terminal tool is removed; other built-in tools stay because removing them breaks session start",
+      "default_on": true,
+      "scarce_quota": false,
+      "experimental": true,
+      "login_hint": "grok login",
+      "install_hint": "see xAI's Grok CLI install page",
+      "note": "If it tries a blocked tool it may end the whole session with an empty answer (reported as suspect).",
+      "quota_patterns": [
+        "rate limit exceeded",
+        "quota exceeded",
+        "usage limit",
+        "too many requests",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "not logged in",
+        "run `?grok login",
+        "please sign in",
+        "unauthorized",
+        "\\b401\\b"
+      ],
+      "effort_args": [
+        "--reasoning-effort",
+        "{effort}"
+      ]
+    },
+    "kimi": {
+      "label": "Kimi Code CLI",
+      "family": "moonshot",
+      "binary": "kimi",
+      "version_cmd": [
+        "kimi",
+        "--version"
+      ],
+      "argv": [
+        "kimi",
+        "{model_args}",
+        "-p",
+        "{prompt}"
+      ],
+      "prompt_via": "arg",
+      "max_arg_bytes": 120000,
+      "model_flag": "-m",
+      "model_required": false,
+      "models": {
+        "standard": {
+          "model": "kimi-code/kimi-for-coding"
+        },
+        "stronger": {
+          "model": "kimi-code/kimi-for-coding"
+        },
+        "strongest": {
+          "model": "kimi-code/k3"
+        }
+      },
+      "expected_flags": [
+        "--prompt",
+        "--model"
+      ],
+      "help_cmd": [
+        "kimi",
+        "--help"
+      ],
+      "readonly": "agent-enforced: its default mode asks before any edit or command, and a one-shot prompt has nobody to say yes (its plan mode cannot be combined with a prompt since version 0.41)",
+      "default_on": true,
+      "scarce_quota": false,
+      "experimental": true,
+      "login_hint": "kimi login",
+      "install_hint": "see Moonshot's Kimi Code CLI install page",
+      "quota_patterns": [
+        "usage limit",
+        "you've reached your",
+        "quota exceeded",
+        "rate limit exceeded",
+        "\\b403\\b",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "not logged in",
+        "run `?kimi login",
+        "unauthorized",
+        "\\b401\\b"
+      ],
+      "effort_note": "no effort flag in kimi --help (21 Sep 2026)"
+    },
+    "claude": {
+      "label": "Claude Code (headless)",
+      "family": "anthropic",
+      "binary": "claude",
+      "version_cmd": [
+        "claude",
+        "--version"
+      ],
+      "argv": [
+        "claude",
+        "-p",
+        "--permission-mode",
+        "plan",
+        "{model_args}",
+        "{effort_args}"
+      ],
+      "prompt_via": "stdin",
+      "model_flag": "--model",
+      "model_required": false,
+      "models": {
+        "standard": {
+          "model": "sonnet",
+          "effort": "medium"
+        },
+        "stronger": {
+          "model": "opus",
+          "effort": "medium"
+        },
+        "strongest": {
+          "model": "opus",
+          "effort": "high"
+        }
+      },
+      "expected_flags": [
+        "--print",
+        "--permission-mode",
+        "--model",
+        "--effort"
+      ],
+      "help_cmd": [
+        "claude",
+        "--help"
+      ],
+      "readonly": "agent-enforced: plan permission mode",
+      "default_on": false,
+      "scarce_quota": false,
+      "experimental": false,
+      "login_hint": "claude (sign in once interactively)",
+      "install_hint": "see Anthropic's Claude Code install page",
+      "note": "Off by default: Claude is already the conductor, so a second Claude adds little independence.",
+      "quota_patterns": [
+        "usage limit",
+        "rate limit exceeded",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "not logged in",
+        "invalid api key",
+        "please run /login",
+        "\\b401\\b"
+      ],
+      "effort_args": [
+        "--effort",
+        "{effort}"
+      ]
+    },
+    "gemini": {
+      "label": "Gemini CLI (legacy)",
+      "family": "google",
+      "binary": "gemini",
+      "version_cmd": [
+        "gemini",
+        "--version"
+      ],
+      "argv": [
+        "gemini",
+        "{model_args}",
+        "-p",
+        "{prompt}"
+      ],
+      "prompt_via": "arg",
+      "max_arg_bytes": 120000,
+      "model_flag": "-m",
+      "model_required": false,
+      "models": {},
+      "expected_flags": [
+        "--prompt"
+      ],
+      "help_cmd": [
+        "gemini",
+        "--help"
+      ],
+      "readonly": "agent-enforced",
+      "default_on": false,
+      "scarce_quota": false,
+      "experimental": true,
+      "legacy": "Personal-account use of this older CLI stopped on 18 June 2026. Prefer agy.",
+      "login_hint": "gemini (sign in once interactively)",
+      "install_hint": "prefer agy instead",
+      "quota_patterns": [
+        "quota exceeded",
+        "resource exhausted",
+        "\\b429\\b"
+      ],
+      "auth_patterns": [
+        "please log in",
+        "unauthenticated",
+        "\\b401\\b",
+        "\\b403\\b"
+      ]
+    }
+  },
+  "not_supported": {
+    "api-key-only vendors": "not supported: they need an API key, and Sidecall only uses subscription CLIs"
+  },
+  "suspect_patterns": [
+    "i can't help with",
+    "i cannot help with",
+    "i'm unable to",
+    "as an ai language model"
+  ]
+}

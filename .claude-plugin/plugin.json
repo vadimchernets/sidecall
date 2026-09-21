@@ -1,0 +1,11 @@
+{
+  "name": "sidecall",
+  "displayName": "Sidecall",
+  "version": "0.1.0",
+  "description": "Ask the other AI command-line agents on your machine (Codex, Antigravity, Grok, Kimi) the same question in parallel through their official CLIs and your own subscriptions, and get a claim-by-claim report of who said what, a second opinion, or a critic from a different model family.",
+  "author": {"name": "Vadym Chernets"},
+  "homepage": "https://github.com/vadimchernets/sidecall",
+  "repository": "https://github.com/vadimchernets/sidecall",
+  "license": "Apache-2.0",
+  "keywords": ["second-opinion", "council", "code-review", "cli", "multi-model", "provenance"]
+}

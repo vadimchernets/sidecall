@@ -1,0 +1,11 @@
+{"question": "What is the capital of Australia, and when did Parliament first sit there?",
+ "title": "Sidecall report",
+ "run_line": "Asked codex, copilot, grok, agy, kimi. Ceiling 120 s.",
+ "sources": {
+   "codex": {"status": "ok", "model": "gpt-5.6-terra", "elapsed_s": 41.2},
+   "copilot": {"status": "ok", "elapsed_s": 12},
+   "grok": {"status": "partial", "elapsed_s": 120, "flags": ["ceiling"]},
+   "agy": {"status": "ok", "elapsed_s": 30},
+   "kimi": {"status": "ok", "elapsed_s": 9},
+   "deepseek": {"status": "quota", "note": "weekly limit"}
+ }}
