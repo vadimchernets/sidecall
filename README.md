@@ -1,5 +1,7 @@
 # Sidecall
 
+> Poly helped? [Give it a star on GitHub](https://github.com/vadimchernets/sidecall) - one click. The plugin is open to everyone either way.
+
 Sidecall lets Claude Code ask the other AI command-line agents already on your computer (Codex, Antigravity, Grok,
 Kimi) the same question at the same time, each through its own official app and your own subscription. You get
 one report that shows, claim by claim, what different model families agree on, where they contradict each other,
